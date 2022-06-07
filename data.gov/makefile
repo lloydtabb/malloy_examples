@@ -1,4 +1,6 @@
-all: auto_recalls.csv lien_filings.csv sf_political_contributions.csv sf_restaurant_health_violations.csv sf_find_neighborhoods.csv
+all: auto_recalls.csv lien_filings.csv sf_political_contributions.csv \
+		sf_restaurant_health_violations.csv \
+		sf_find_neighborhoods.csv whitehouse-waves-2013.csv
 
 auto_recalls.csv:
 	curl https://data.transportation.gov/api/views/6axg-epim/rows.csv -o auto_recalls.csv
@@ -17,3 +19,10 @@ sf_311_cases.csv:
 
 sf_find_neighborhoods.csv:
 	curl https://data.sfgov.org/api/views/6ia5-2f8k/rows.csv? -o sf_find_neighborhoods.csv
+
+# From obamawhitehouse - visitor logs
+#  https://obamawhitehouse.archives.gov/goodgovernment/tools/visitor-records
+#
+whitehouse-waves-2013.csv:
+	curl https://obamawhitehouse.archives.gov/sites/default/files/disclosures/whitehouse-waves-2013.csv__0.zip -o whitehouse-waves-2013.csv__0.zip
+	unzip whitehouse-waves-2013.csv__0.zip

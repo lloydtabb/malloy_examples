@@ -1,0 +1,8 @@
+source: usa_spending is table('duckdb:/usr/local/google/home/ltabb/s/malloy_examples/usaspending.gov/FY2022_All_Contracts_Full_20220510_*.parquet') {
+  measure: award_count is count()
+
+  query: by_agency is {
+    group_by: funding_agency_name
+    aggregate: award_count
+  }
+}
