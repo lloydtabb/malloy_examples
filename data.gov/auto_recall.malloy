@@ -7,7 +7,7 @@
 //  https://data.transportation.gov/api/views/6axg-epim/rows.csv
 
 
-source: recall is table('duckdb:/usr/local/google/home/ltabb/s/malloy_examples/data.gov/auto_recalls.csv') {
+source: auto_recalls is table('duckdb:/usr/local/google/home/ltabb/s/malloy_examples/data.gov/auto_recalls.csv') {
   declare:
     recall_count is count()
 
