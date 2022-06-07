@@ -4,5 +4,9 @@ source: usa_spending is table('duckdb:/usr/local/google/home/ltabb/s/malloy_exam
   query: by_agency is {
     group_by: funding_agency_name
     aggregate: award_count
+    nest: sub_agency is {
+      group_by: funding_sub_agency_name
+      aggregate: award_count
+    }
   }
 }
