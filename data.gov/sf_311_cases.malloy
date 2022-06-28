@@ -1,7 +1,13 @@
+// Data for this model is pretty large and not downlaoded by default.
+// To fetch data for this model run the following command:
+//
+//    make data/sf_311_cases.csv
+//
+
 sql: sf_311_cases_read is  || 
   SELECT * 
   FROM read_csv_auto(
-    '/Users/anikaks/Desktop/malloy_models/malloy_examples/data.gov/sf_311_cases.csv'
+    'data/sf_311_cases.csv'
     -- ,ALL_VARCHAR=1 
   )
   ;;

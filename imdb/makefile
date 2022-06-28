@@ -1,20 +1,21 @@
 
 SHELL = bash
 
-all: principals.parquet titles.parquet names.parquet
+all: data/principals.parquet data/titles.parquet data/names.parquet
 
 # Rule to download the files
 %.gz:
-	if [ -x "$(command -v wget)" ]; then wget https://datasets.imdbws.com/$@; else curl https://datasets.imdbws.com/$@ -o $@; fi
+	mkdir -p data
+	curl https://datasets.imdbws.com/$(notdir $@) -o $@
 
-principals.parquet: title.principals.tsv.gz
+data/principals.parquet: data/title.principals.tsv.gz
 	duckdb < build_principals.sql
 
-titles.parquet: title.crew.tsv.gz title.ratings.tsv.gz title.basics.tsv.gz
+data/titles.parquet: data/title.crew.tsv.gz data/title.ratings.tsv.gz data/title.basics.tsv.gz
 
 	duckdb < build_titles.sql
 
-names.parquet: name.basics.tsv.gz
+data/names.parquet: data/name.basics.tsv.gz
 	duckdb < build_names.sql
 
 clean:

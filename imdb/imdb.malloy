@@ -17,10 +17,6 @@ source: movies is titles_table + {
     row_count is count()
     total_ratings is sum(ratings.numVotes/1000.0)
 
-  query: cnt is {
-    aggregate: row_count, title_count
-  }
-
   query: by_title is {
     group_by: primaryTitle, startYear, ratings.numVotes
     order_by: 3 desc

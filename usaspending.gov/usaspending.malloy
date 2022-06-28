@@ -1,4 +1,8 @@
-source: usa_spending is table('duckdb:/usr/local/google/home/ltabb/s/malloy_examples/usaspending.gov/FY2022_All_Contracts_Full_20220510_*.parquet') {
+sql: usa_spending_sql is ||
+  SELECT * FROM 'data/FY2022_All_Contracts_Full_20220608_*.parquet'
+;; on "duckdb"
+
+source: usa_spending is from_sql(usa_spending_sql) {
   measure: award_count is count()
   measure: total_award is current_total_value_of_award.sum()
 
@@ -10,4 +14,6 @@ source: usa_spending is table('duckdb:/usr/local/google/home/ltabb/s/malloy_exam
       aggregate: award_count, total_award
     }
   }
+
+
 }

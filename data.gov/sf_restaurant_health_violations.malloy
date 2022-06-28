@@ -1,5 +1,5 @@
 
-source: sf_restaurant_health_violations is table('duckdb:/Users/anikaks/Desktop/malloy_models/malloy_examples/data.gov/sf_restaurant_health_violations.csv'){
+source: sf_restaurant_health_violations is table('duckdb:data/sf_restaurant_health_violations.csv'){
   
   measure: total_violations is count()
   measure: first_cited is min(inspection_date.day)

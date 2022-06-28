@@ -8,7 +8,7 @@
 
 sql: liens_sql is  || 
   SELECT * FROM read_csv_auto(
-      '/usr/local/google/home/ltabb/s/malloy_examples/data.gov/lien_filings.csv',
+      'data/lien_filings.csv',
       ALL_VARCHAR=1 
       )
   ;;

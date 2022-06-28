@@ -1,4 +1,4 @@
-source: contributions is table('duckdb:/Users/anikaks/Desktop/malloy_models/malloy_examples/data.gov/sf_political_contributions.csv'){
+source: contributions is table('duckdb:data/sf_political_contributions.csv'){
 
   measure: total_contributions is count()
   measure: sum_of_contributions is `Amount of Contribution`.sum()
