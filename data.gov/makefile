@@ -6,7 +6,7 @@ data:
 	mkdir -p data
 
 data/auto_recalls.csv: data
-	curl https://data.transportation.gov/api/views/6axg-epim/rows.csv -o data/auto_ recalls.csv
+	curl https://data.transportation.gov/api/views/6axg-epim/rows.csv -o data/auto_recalls.csv
 
 data/lien_filings.csv: data
 	curl https://data.ct.gov/api/views/xfev-8smz/rows.csv -o data/lien_filings.csv
