@@ -50,7 +50,13 @@ source: movies is titles_table + {
   }
 
   query: search_index is {
-    index: primaryTitle, genres.value, principals.people.primaryName, characters.value by total_ratings
-    where: ratings.numVotes > 30000
+    //index: * by total_ratings
+    index: 
+      genres.value, 
+      principals.people.primaryName, 
+      primaryTitle,
+      characters.value 
+      by total_ratings
+    where: ratings.numVotes > 100000
   }
 }
