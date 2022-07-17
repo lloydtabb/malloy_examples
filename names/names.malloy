@@ -1,0 +1,64 @@
+source: names_table is table('duckdb:data/usa_names.parquet') {
+  measure: population is `number`.sum()
+  dimension: decade is floor(`year`/10)*10
+
+  query: by_state is {
+    group_by: state
+    aggregate: population
+  }
+
+  query: by_gender is {
+    group_by: gender
+    aggregate: population
+  }
+
+  query: by_name is {
+    group_by: name
+    aggregate: population
+    limit: 10
+  }
+
+  query: by_year is {
+    group_by: `year`
+    aggregate: population
+  }
+
+  query: by_decade is {
+    group_by: decade
+    aggregate: population
+    order_by: 1 desc
+  }
+
+  query: by_name2 is {
+    aggregate: population
+    nest: by_name
+  }
+  -> {
+    project: 
+      by_name.*,
+      percentage_of_population is by_name.population / population * 100 
+    order_by: 3 desc
+    limit: 10
+  }
+
+  query: male_names is by_name {? gender = 'M'}
+  query: female_names is by_name {? gender = 'F'}
+
+  query: name_dashboard is by_name {
+    nest: 
+      by_decade
+      by_state
+      by_gender
+    limit: 10
+  }
+}
+
+query: j is names_table->name_dashboard {? name ~ r'J'}
+
+query: by_state is names_table -> {
+  group_by: state
+  aggregate: population
+  nest: by_name {? gender = 'M'}
+  limit: 10
+}
+

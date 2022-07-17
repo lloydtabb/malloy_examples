@@ -40,12 +40,28 @@ source: movies is titles_table + {
   }
 
   query: by_genre is {
-    group_by: genres.value
-    aggregate: title_count, total_ratings
+    aggregate: title_count
+    nest: b is {
+      group_by: genres.value
+      aggregate: title_count, total_ratings
+    }
+  }
+  -> {
+    group_by: b.value, b.title_count, percent_of_title_count is b.title_count/title_count * 100.0
+    order_by: 3 desc
   }
 
   query: by_character is {
     group_by: principals.characters.value
+    aggregate: title_count
+  }
+
+  query: year_and_genre is by_year + {
+    nest: by_genre
+  }
+
+  query: simple_genre is {
+    group_by: genres.value
     aggregate: title_count
   }
 
