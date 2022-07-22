@@ -2,6 +2,12 @@ source: names_table is table('duckdb:data/usa_names.parquet') {
   measure: population is `number`.sum()
   dimension: decade is floor(`year`/10)*10
 
+  query: by_name is {
+    group_by: name
+    aggregate: population
+    limit: 10
+  }
+
   query: by_state is {
     group_by: state
     aggregate: population
@@ -12,24 +18,19 @@ source: names_table is table('duckdb:data/usa_names.parquet') {
     aggregate: population
   }
 
-  query: by_name is {
-    group_by: name
-    aggregate: population
-    limit: 10
-  }
-
   query: by_year is {
     group_by: `year`
     aggregate: population
+    order_by: 1 asc
   }
 
   query: by_decade is {
     group_by: decade
     aggregate: population
-    order_by: 1 desc
+    order_by: 1 asc
   }
 
-  query: by_name2 is {
+  query: name_as_pct_of_pop is {
     aggregate: population
     nest: by_name
   }
@@ -44,6 +45,12 @@ source: names_table is table('duckdb:data/usa_names.parquet') {
   query: male_names is by_name {? gender = 'M'}
   query: female_names is by_name {? gender = 'F'}
 
+  query: top_names_by_state_ea_gender is by_state {
+    nest: male_names
+    nest: female_names
+    limit: 10
+  }
+
   query: name_dashboard is by_name {
     nest: 
       by_decade
@@ -53,12 +60,7 @@ source: names_table is table('duckdb:data/usa_names.parquet') {
   }
 }
 
-query: j is names_table->name_dashboard {? name ~ r'J'}
+query: j_names is names_table -> name_dashboard {? name ~ r'J'}
 
-query: by_state is names_table -> {
-  group_by: state
-  aggregate: population
-  nest: by_name {? gender = 'M'}
-  limit: 10
-}
+
 
